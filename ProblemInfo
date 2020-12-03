@@ -1,0 +1,84 @@
+#  My school work
+
+print('''<---------------------------------------------------------------------------------------->
+  Šis kods aprēķina materiālu izmaksas un laiku, par kuru tiks veikta rotaļlietu partija
+<---------------------------------------------------------------------------------------->''')
+
+while True:
+    toy_count = (input('\nIevadiet visu rotaļlietu skaitu: '))
+    cloth = (input('Ievadiet nepieciešamā auduma skaitu uz 1 rotaļlietu (kvadrātm): '))
+    filler = (input('Ievadiet nepieciešamā pildījuma daudzumu uz 1 rotaļlietu (kubikm): '))  #  Ievadām datus
+
+    try:
+        toy_count = int(toy_count)
+        cloth = float(cloth)
+        filler = float(filler)  #  Pārbaudām datus
+    except:
+        print('\n!---Pārliecinošs lūgums izmantot tikai ciparus/skaitļus---!')  #  Ja tas nav skaitļi
+        continue
+    if toy_count <= 0 or cloth <= 0 or filler <= 0:
+        print('\n!---Pārliecinošs lūgums ievadīt tikai pozitīvus skaitļus---!')  #  Ja kaut kas ir mazāk par 0, rakstām:
+        continue
+    break
+
+while True:
+  cloth_price = (input('Ievadiet auduma cenu par 1 kvadrātmetru euro: '))
+  filler_price = (input('Ievadiet cik maksā par 1 pildījuma kubikmetru euro: '))
+  revenue = (input('Ievadiet cik jūs ņēmat naudus par partiju eurō: '))  #  Ievadām datus
+
+  try:
+    cloth_price = float(cloth_price)
+    filler_price = float(filler_price)
+    revenue = int(revenue)  #  Pārbaudām datus
+  except:
+    print('\n!---Pārliecinošs lūgums izmantot tikai ciparus/skaitļus---!')  #  Ja tas nav skaitļi
+    continue
+  if cloth_price <= 0 or filler_price <= 0 or revenue <= 0:
+    print('\n!---Pārliecinošs lūgums ievadīt tikai pozitīvus skaitļus---!')  #  Ja kaut kas ir mazāk par 0, rakstām:
+    continue
+  break
+
+#  1 rotaļlieta iet visu konveijeru pēc input () minūtēm (atkarīgs no rotaļlietas, kuru pieprasījusi ražošana), bet nākamā jau nāk no konveijera pēc 5 sekundēm pēc iepriekšējā, bet vismaz 10 rotaļlietas var darīt
+
+while True:
+    time_for_one_toy = input('Par kādu laiku 1. rotalļiea dodos caur konveijeru (minutos): ')  #  Ievadām datus
+    try:
+        time_for_one_toy = float(time_for_one_toy)  #  Pārbaudām datus
+    except:
+        print('\n!---Pārliecinošs lūgums izmantot tikai ciparus/skaitļus---!')  #  Ja tas nav skaitļi
+        continue
+    if time_for_one_toy <= 0:
+        print('\n!---Pārliecinošs lūgums ievadīt tikai pozitīvus skaitļus---!')  #  Ja kaut kas ir mazāk par 0, rakstām:
+        continue
+    break
+
+#<---Sākas secinājumi--->
+print('<------------------------------------------------------------------------------>')
+
+#<---Laika skaitīšana uz partiju--->
+time_for_all_toys_in_sec = (toy_count - 1) * 5 + time_for_one_toy * 60  # skaitam viss pa formulai
+time_for_all_toys_in_min = time_for_all_toys_in_sec / 60
+time_for_all_toys_in_hours = time_for_all_toys_in_min / 60
+print('Visa partija būs gatava pēc', time_for_all_toys_in_sec, 'sekundes. Tas ir',
+      '{0:1.1f}'.format(time_for_all_toys_in_min),
+      'minūtes vai', '{0:1.2f}'.format(time_for_all_toys_in_hours), 'stundas.')  # Rakstām kopsummas
+
+#<---Auduma daudzuma aprēķins--->
+cloth_for_all_toys = cloth * toy_count  # skaitam viss pa formulai
+print('\nUz visu rotaļlietu partiju aizies: ' + str(cloth_for_all_toys) +
+      ' kvadrātcentimetri audi.')  # Rakstām kopsummas
+#<---Pildījuma daudzuma aprēķins--->
+filler_for_all_toys = filler * toy_count  # skaitam viss pa formulai
+print('Uz visu rotaļlietu partiju aizies: ' + str(filler_for_all_toys) + ' pildvielas kubikcentimetri.')  # Rakstām kopsummas
+
+#<---Auduma vērtības aprēķins--->
+cost_for_all_cloth = toy_count * cloth / 100 * cloth_price  # skaitam viss pa formulai
+print('\nViss rotaļlietu audums maksās:', '{0:1.2f}'.format(cost_for_all_cloth), 'eiro')  # Rakstām kopsummas
+
+#<---Pildījuma vērtības aprēķins--->
+cost_for_all_filler = toy_count * filler / 100 * filler_price  # skaitam viss pa formulai
+print('Visa rotaļlietu pildviela maksās:', '{0:1.2f}'.format(cost_for_all_filler), 'eiro')  # Rakstām kopsummas
+
+#<---Partijas tīrās smakas aprēķins--->
+net_income = revenue - cost_for_all_cloth - cost_for_all_filler  # skaitam viss pa formulai
+print('\nJūsu ieņēmumi no partijas, ņemot vērā audumu un pildījumu:', net_income, 'eiro')  # Rakstām kopsummas
